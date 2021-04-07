@@ -6,7 +6,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <UserNotifications/UserNotifications.h>
 @interface AppDelegate ()
 
 @end
@@ -14,10 +14,11 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    return YES;
-}
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+//    // Override point for customization after application launch.
+////    [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+//    return YES;
+//}
 
 
 #pragma mark - UISceneSession lifecycle
@@ -36,5 +37,24 @@
     // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
 }
 
+-(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+{
+    UNNotificationPresentationOptions presentationOptions = UNNotificationPresentationOptionSound+UNNotificationPresentationOptionAlert;
+    completionHandler(presentationOptions);
+}
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    center.delegate = self;
+    return YES;
+}
+    // This code block is invoked when application is in foreground (active-mode)
+// -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+//
+//        UIAlertView *notificationAlert = [[UIAlertView alloc] initWithTitle:@"Notification"    message:@"This local notification"
+//        delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//
+//        [notificationAlert show];
+//       // NSLog(@"didReceiveLocalNotification");
+//    }
 @end
